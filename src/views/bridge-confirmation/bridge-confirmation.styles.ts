@@ -65,7 +65,8 @@ const useBridgeConfirmationStyles = createUseStyles((theme: Theme) => ({
     backgroundColor: theme.palette.grey.light,
     justifyContent: "center",
     padding: [theme.spacing(1), theme.spacing(2)],
-    borderRadius: 56,
+    // borderRadius: 56,
+    borderRadius: 0,
   },
   arrowIcon: {
     transform: "rotate(90deg)",

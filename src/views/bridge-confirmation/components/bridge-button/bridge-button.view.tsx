@@ -32,7 +32,7 @@ const BridgeButton: FC<BridgeButtonProps> = ({
       case "pending": {
         return (
           <Button onClick={onApprove}>
-            {`Allow Polygon zkEVM Bridge to spend my ${token.symbol}`}
+            {`Allow Blastport Bridge to spend my ${token.symbol}`}
           </Button>
         );
       }

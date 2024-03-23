@@ -76,7 +76,8 @@ const useBridgeDetailsStyles = createUseStyles((theme: Theme) => ({
     gap: theme.spacing(1),
     alignItems: "center",
     border: "none",
-    borderRadius: 8,
+    // borderRadius: 8,
+    borderRadius: 0,
     backgroundColor: theme.palette.grey.light,
     "&:hover": {
       backgroundColor: theme.palette.grey.main,

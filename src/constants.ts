@@ -1,8 +1,10 @@
 import { ethers } from "ethers";
 import { JsonRpcProvider } from "@ethersproject/providers";
 
-import { ReactComponent as EthChainIcon } from "src/assets/icons/chains/ethereum.svg";
-import { ReactComponent as PolygonZkEVMChainIcon } from "src/assets/icons/chains/polygon-zkevm.svg";
+// import { ReactComponent as EthChainIcon } from "src/assets/icons/chains/ethereum.svg";
+// import { ReactComponent as PolygonZkEVMChainIcon } from "src/assets/icons/chains/polygon-zkevm.svg";
+import { ReactComponent as EthChainIcon } from "src/assets/icons/chains/blast.svg";
+import { ReactComponent as PolygonZkEVMChainIcon } from "src/assets/icons/chains/logo.svg";
 import { ProofOfEfficiency__factory } from "src/types/contracts/proof-of-efficiency";
 import { ProviderError } from "src/adapters/error";
 import { Chain, Currency, EthereumChain, EthereumChainId, Token, ZkEVMChain } from "src/domain";
@@ -48,8 +50,9 @@ export const REPORT_ERROR_FORM_ENTRIES = {
 export const REPORT_ERROR_FORM_URL =
   "https://docs.google.com/forms/d/1YOvhK2RfTQmYO8DGMRqN7FYxRhBZd9jB6PZ7InJirTk/viewform";
 
-export const ETH_TOKEN_LOGO_URI =
-  "https://raw.githubusercontent.com/Uniswap/interface/main/src/assets/images/ethereum-logo.png";
+// export const ETH_TOKEN_LOGO_URI =
+//   "https://raw.githubusercontent.com/Uniswap/interface/main/src/assets/images/ethereum-logo.png";
+export const ETH_TOKEN_LOGO_URI = "https://cryptologos.cc/logos/ethereum-eth-logo.svg";
 
 export const POLYGON_SUPPORT_URL = "https://support.polygon.technology";
 
@@ -84,7 +87,8 @@ export const getChains = ({
   ]).then(([ethereumNetwork, polygonZkEVMNetwork, polygonZkEVMNetworkName]) => [
     {
       key: "ethereum",
-      name: EthereumChainId.GOERLI === ethereumNetwork.chainId ? "Ethereum Goerli" : "Ethereum",
+      // name: EthereumChainId.SEPOLIA === ethereumNetwork.chainId ? "Sepolia" : "Ethereum",
+      name: EthereumChainId.SEPOLIA === ethereumNetwork.chainId ? "Blast Sepolia Testnet" : "Blast",
       networkId: 0,
       Icon: EthChainIcon,
       provider: ethereumProvider,

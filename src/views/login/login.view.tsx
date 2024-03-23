@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { ReactComponent as PolygonZkEVMLogo } from "src/assets/polygon-zkevm-logo.svg";
+import { ReactComponent as PolygonZkEVMLogo } from "src/assets/logo.svg";
 import useLoginStyles from "src/views/login/login.styles";
 import Policy from "src/views/login/components/policy/policy.view";
 import WalletList from "src/views/login/components/wallet-list/wallet-list.view";

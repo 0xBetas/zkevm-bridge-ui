@@ -42,7 +42,7 @@ const Settings: FC = () => {
       <Header
         title="Settings"
         backTo={{ routeKey: "home" }}
-        Subtitle={<Typography type="body2">Polygon zkEVM Bridge v{bridgeVersion}</Typography>}
+        Subtitle={<Typography type="body2">Blastport Bridge v{bridgeVersion}</Typography>}
       />
       <Card className={classes.card}>
         {env.fiatExchangeRates.areEnabled && (

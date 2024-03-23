@@ -18,7 +18,8 @@ const useNetworkBoxStyles = createUseStyles((theme: Theme) => ({
     gap: theme.spacing(4),
   },
   button: {
-    borderRadius: 8,
+    // borderRadius: 8,
+    borderRadius: 0,
     display: "flex",
     alignItems: "center",
     appearance: "none",

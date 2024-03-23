@@ -58,7 +58,8 @@ const useBridgeCardStyles = createUseStyles((theme: Theme) => ({
     color: theme.palette.warning.main,
     fontSize: 14,
     padding: [theme.spacing(0.5), theme.spacing(1)],
-    borderRadius: 8,
+    // borderRadius: 8,
+    borderRadius: 0,
     marginRight: "auto",
   },
   pendingStatus: {
@@ -96,7 +97,8 @@ const useBridgeCardStyles = createUseStyles((theme: Theme) => ({
   finaliseButton: {
     border: "none",
     padding: [theme.spacing(0.75), theme.spacing(3)],
-    borderRadius: 32,
+    // borderRadius: 32,
+    borderRadius: 0,
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.white,
     fontWeight: 700,

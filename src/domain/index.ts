@@ -71,8 +71,10 @@ export interface RouterState {
 }
 
 export enum EthereumChainId {
-  MAINNET = 1,
-  GOERLI = 5,
+  MAINNET = 238,
+  // GOERLI = 5,
+  // SEPOLIA = 11155111,
+  SEPOLIA = 168587773,
 }
 
 export enum WalletName {

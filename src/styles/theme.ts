@@ -26,6 +26,7 @@ const theme = {
       light: "rgba(0,255,0,0.1)",
     },
     transparency: "rgba(8,17,50,0.5)",
+    brand: "#FCFC05",
   },
   hoverTransition: "all 150ms",
   breakpoints: {

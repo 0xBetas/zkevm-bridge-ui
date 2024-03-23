@@ -62,7 +62,7 @@ const Home = (): JSX.Element => {
           <InfoBanner
             className={classes.maxEtherBridgeInfo}
             message={`ETH bridges in the ${
-              EthereumChainId.GOERLI === env?.chains[0].chainId ? "Ethereum Goerli" : "Ethereum"
+              EthereumChainId.SEPOLIA === env?.chains[0].chainId ? "Blast Sepolia" : "Blast"
             } network are limited to ${
               maxEtherBridge ? ethersUtils.formatEther(maxEtherBridge) : "--"
             } ETH in early testnet versions`}

@@ -30,7 +30,8 @@ const useHeaderStyles = createUseStyles((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     padding: [theme.spacing(0.75), theme.spacing(1)],
-    borderRadius: 8,
+    // borderRadius: 8,
+    borderRadius: 0,
     gap: theme.spacing(1),
     transition: theme.hoverTransition,
     "&:hover": {

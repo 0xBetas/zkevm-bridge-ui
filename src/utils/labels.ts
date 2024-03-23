@@ -16,9 +16,10 @@ export function getBridgeStatus(status: Bridge["status"]): string {
 export function getNetworkName(chain: Chain): string | undefined {
   switch (chain.chainId) {
     case EthereumChainId.MAINNET:
-      return "Ethereum";
-    case EthereumChainId.GOERLI:
-      return "Ethereum Goerli";
+      // return "Ethereum";
+      return "Blastport";
+    case EthereumChainId.SEPOLIA:
+      return "Blastport Sepolia Testnet";
     default:
       return undefined;
   }
@@ -28,7 +29,7 @@ export function getDeploymentName(chain: Chain): string | undefined {
   switch (chain.chainId) {
     case EthereumChainId.MAINNET:
       return "Mainnet";
-    case EthereumChainId.GOERLI:
+    case EthereumChainId.SEPOLIA:
       return "Testnet";
     default:
       return undefined;

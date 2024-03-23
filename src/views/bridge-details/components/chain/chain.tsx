@@ -18,13 +18,13 @@ const Chain: FC<ChainProps> = ({ chain, className }) => {
     return (
       <Typography type="body1" className={className}>
         <EthChainIcon />{" "}
-        {domain.EthereumChainId.GOERLI === chain.chainId ? "Ethereum Goerli" : "Ethereum"}
+        {domain.EthereumChainId.SEPOLIA === chain.chainId ? "Blastport Sepolia" : "Blastport"}
       </Typography>
     );
   } else {
     return (
       <Typography type="body1" className={className}>
-        <PolygonZkEVMChainIcon className={classes.polygonZkEvmChain} /> Polygon zkEVM
+        <PolygonZkEVMChainIcon className={classes.polygonZkEvmChain} /> Blastport
       </Typography>
     );
   }

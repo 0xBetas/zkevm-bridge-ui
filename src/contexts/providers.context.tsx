@@ -95,8 +95,8 @@ const ProvidersProvider: FC<PropsWithChildren> = (props) => {
         if (!supportedChainIds.includes(currentNetworkChainId)) {
           setConnectedProvider({
             status: "failed",
-            error: supportedChainIds.includes(EthereumChainId.GOERLI)
-              ? `Switch your network to Ethereum Goerli testnet or ${env.chains[1].name} to continue`
+            error: supportedChainIds.includes(EthereumChainId.SEPOLIA)
+              ? `Switch your network to Blast Sepolia Testnet testnet or ${env.chains[1].name} to continue`
               : `Switch your network to Ethereum or ${env.chains[1].name} to continue`,
           });
         } else {

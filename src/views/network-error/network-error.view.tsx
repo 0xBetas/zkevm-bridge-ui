@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 
 import useNetworkErrorStyles from "src/views/network-error/network-error.styles";
-import { ReactComponent as PolygonZkEVMLogo } from "src/assets/polygon-zkevm-logo.svg";
+import { ReactComponent as PolygonZkEVMLogo } from "src/assets/logo.svg";
 import { ProviderError, providerError } from "src/adapters/error";
 import Typography from "src/views/shared/typography/typography.view";
 import routes from "src/routes";
@@ -21,8 +21,8 @@ const NetworkError: FC = () => {
         <Typography type="h1">Network Error</Typography>
         <Typography type="body1">
           {parsedProviderError.data === ProviderError.Ethereum
-            ? "We cannot connect to the Ethereum node."
-            : "We cannot connect to the Polygon zkEVM node."}
+            ? "We cannot connect to the Blast node."
+            : "We cannot connect to the Blastport node."}
         </Typography>
         <Typography type="body2">It will be operative again soon</Typography>
       </div>

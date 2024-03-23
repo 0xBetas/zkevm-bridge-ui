@@ -17,15 +17,17 @@ const useLoginStyles = createUseStyles((theme: Theme) => ({
     alignItems: "center",
   },
   logo: {
-    height: 120,
+    height: 150,
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(3),
   },
   appName: {
     margin: "0px auto",
     padding: [theme.spacing(1.25), theme.spacing(4)],
-    background: theme.palette.grey.main,
-    borderRadius: 56,
+    // background: theme.palette.grey.main,
+    background: theme.palette.brand,
+    // borderRadius: 56,
+    borderRadius: 0,
     marginBottom: theme.spacing(5),
   },
   networkBoxWrapper: {

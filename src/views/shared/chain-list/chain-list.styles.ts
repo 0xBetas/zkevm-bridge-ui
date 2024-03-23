@@ -68,7 +68,8 @@ const useListStyles = createUseStyles((theme: Theme) => ({
     gap: theme.spacing(1),
     padding: theme.spacing(2),
     background: theme.palette.grey.light,
-    borderRadius: 8,
+    // borderRadius: 8,
+    borderRadius: 0,
     cursor: "pointer",
     alignItems: "center",
     "&:not(:first-of-type)": {

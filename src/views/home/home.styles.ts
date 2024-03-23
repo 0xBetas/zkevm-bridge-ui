@@ -9,7 +9,8 @@ const useHomeStyles = createUseStyles((theme: Theme) => ({
     margin: [theme.spacing(3), "auto", theme.spacing(3)],
     backgroundColor: theme.palette.grey.main,
     padding: [theme.spacing(1.25), theme.spacing(3)],
-    borderRadius: 56,
+    // borderRadius: 56,
+    borderRadius: 0,
     [theme.breakpoints.upSm]: {
       margin: [theme.spacing(3), "auto", theme.spacing(5)],
     },

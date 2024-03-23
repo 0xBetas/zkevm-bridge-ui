@@ -8,7 +8,9 @@ const useLayoutStyles = createUseStyles((theme: Theme) => ({
     minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
-    background: theme.palette.grey.light,
+    background: "transparent",
+    // background: theme.palette.grey.light,
+    // background: theme.palette.black,
   },
   container: {
     width: "100%",

@@ -19,6 +19,7 @@ const envContext = createContext<Env | undefined>(undefined);
 
 const EnvProvider: FC<PropsWithChildren> = (props) => {
   const [env, setEnv] = useState<Env>();
+  console.log("env", env);
   const { notifyError } = useErrorContext();
   const navigate = useNavigate();
   const location = useLocation();

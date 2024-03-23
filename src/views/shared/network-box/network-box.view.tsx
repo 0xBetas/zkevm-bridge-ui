@@ -65,7 +65,7 @@ const NetworkBox: FC = () => {
   return (
     <Card>
       <div className={classes.networkBox}>
-        <Typography type="body1">Polygon zkEVM testnet</Typography>
+        <Typography type="body1">Blastport testnet</Typography>
         <ul>
           <li className={classes.listItem}>
             <Typography type="body2">
@@ -95,7 +95,7 @@ const NetworkBox: FC = () => {
           </li>
           <li className={classes.listItem}>
             <Typography type="body2">
-              L1 Goerli Smart Contract:{" "}
+              L1 Blast Smart Contract:{" "}
               <a
                 href={`${ethereumChain.explorerUrl}/address/${ethereumChain.poeContractAddress}`}
                 rel="noreferrer"

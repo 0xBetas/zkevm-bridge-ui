@@ -24,7 +24,7 @@ const Policy: FC<PolicyProps> = ({ onClose, onConnect }) => {
       <div className={classes.background} onMouseDown={onOutsideClick}>
         <Card className={classes.card}>
           <div className={classes.text}>
-            <Typography type="body1">Welcome to the Polygon zkEVM testnet</Typography>
+            <Typography type="body1">Welcome to the Blastport testnet</Typography>
             <Typography type="body2">
               DISCLAIMER: This early version of the public testnet will require frequent maintenance
               and may be restarted if upgrades are needed.

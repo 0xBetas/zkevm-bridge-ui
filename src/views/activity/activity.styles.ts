@@ -11,7 +11,8 @@ const useActivityStyles = createUseStyles((theme: Theme) => ({
     zIndex: 1,
     top: 0,
     position: "sticky",
-    background: theme.palette.grey.light,
+    // background: theme.palette.grey.light,
+    background: "transprent",
   },
   stickyContentBorder: {
     borderBottom: `${theme.palette.grey.main} 1px solid`,
