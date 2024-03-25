@@ -28,10 +28,10 @@ export function getBridgeStatus(status: Bridge["status"], from: Bridge["from"]):
 export function getEthereumNetworkName(chainId: number): string {
   switch (chainId) {
     case EthereumChainId.GOERLI: {
-      return "Goerli Testnet";
+      return "Blast Sepolia Testnet";
     }
     default: {
-      return "Ethereum";
+      return "Blast";
     }
   }
 }

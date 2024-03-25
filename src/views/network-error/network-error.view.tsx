@@ -30,8 +30,8 @@ export const NetworkError: FC = () => {
         <Typography type="h1">Network Error</Typography>
         <Typography type="body1">
           {parsedProviderError.data === ProviderError.Ethereum
-            ? "We cannot connect to the Ethereum node."
-            : "We cannot connect to the Polygon zkEVM node."}
+            ? "We cannot connect to the Blast node."
+            : "We cannot connect to the Blastport node."}
         </Typography>
         <Typography type="body2">It will be operative again soon</Typography>
       </div>

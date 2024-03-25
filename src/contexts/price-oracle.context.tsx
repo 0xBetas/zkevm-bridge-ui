@@ -92,14 +92,14 @@ const PriceOracleProvider: FC<PropsWithChildren> = (props) => {
 
       if (!erc20Token) {
         throw new Error(
-          `ETH is not a valid ERC-20 token and its wrapped version "WETH" could not be found on the Ethereum chain`
+          `ETH is not a valid ERC-20 token and its wrapped version "WETH" could not be found on the Blast chain`
         );
       }
 
       const ethereumChain = env.chains.find((chain) => chain.key === "ethereum");
 
       if (ethereumChain === undefined) {
-        throw new Error("Ethereum chain is not available");
+        throw new Error("Blast chain is not available");
       }
 
       const uniswapPairContractAddress = computePairAddress({

@@ -131,7 +131,7 @@ const ProvidersProvider: FC<PropsWithChildren> = (props) => {
                 return connectMetamaskProvider({ account, env, web3Provider });
               } else {
                 return setConnectedProvider({
-                  error: `We can't obtain any valid Ethereum account`,
+                  error: `We can't obtain any valid Blast account`,
                   status: "failed",
                 });
               }
@@ -194,7 +194,7 @@ const ProvidersProvider: FC<PropsWithChildren> = (props) => {
     setIsSwitchingNetwork(true);
     if (!connectedProvider.provider.request) {
       return Promise.reject(
-        new Error("No request method is available from the provider to switch the Ethereum chain")
+        new Error("No request method is available from the provider to switch the Blast chain")
       );
     }
     return connectedProvider.provider
@@ -230,7 +230,7 @@ const ProvidersProvider: FC<PropsWithChildren> = (props) => {
       }
       if (!provider.provider.request) {
         return Promise.reject(
-          new Error("No request method is available from the provider to add an Ethereum chain")
+          new Error("No request method is available from the provider to add an Blast chain")
         );
       }
       return provider.provider

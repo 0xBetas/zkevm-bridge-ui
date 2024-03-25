@@ -23,7 +23,7 @@ const ethereumAccountsParser = StrictSchema<string[]>()(z.array(z.string()));
 
 const silentlyGetConnectedAccounts = (provider: Web3Provider): Promise<string[]> => {
   if (!provider.provider.request) {
-    throw Error("No request method is available from the provider to get the Ethereum accounts");
+    throw Error("No request method is available from the provider to get the Blast accounts");
   }
   return provider.provider
     .request({ method: "eth_accounts" })
