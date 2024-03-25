@@ -14,6 +14,10 @@ export const useHeaderStyles = createUseStyles((theme: Theme) => ({
   centerBlock: {
     justifyContent: "center",
   },
+  centerBlockTitle: {
+    backgroundColor: theme.palette.grey.light,
+    padding: "8px 16px",
+  },
   header: {
     alignItems: "center",
     display: "flex",
@@ -46,7 +50,8 @@ export const useHeaderStyles = createUseStyles((theme: Theme) => ({
     },
     alignItems: "center",
     backgroundColor: theme.palette.white,
-    borderRadius: 50,
+    // borderRadius: 50,
+    borderRadius: 0,
     cursor: "pointer ",
     display: "flex",
     justifyContent: "center",

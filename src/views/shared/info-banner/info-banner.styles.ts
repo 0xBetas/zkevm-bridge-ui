@@ -5,7 +5,8 @@ import { Theme } from "src/styles/theme";
 export const useInfoBannerStyles = createUseStyles((theme: Theme) => ({
   infoBanner: {
     background: theme.palette.grey.main,
-    borderRadius: "8px",
+    // borderRadius: 8,
+    borderRadius: 0,
     display: "flex",
     gap: theme.spacing(1),
     maxWidth: theme.maxWidth,

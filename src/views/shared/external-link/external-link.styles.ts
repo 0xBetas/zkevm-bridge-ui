@@ -7,6 +7,7 @@ export const useExternalLinkStyles = createUseStyles((theme: Theme) => ({
     "&:hover": {
       color: theme.palette.primary.dark,
     },
+    background: theme.palette.grey.light,
     color: theme.palette.primary.main,
     transition: theme.hoverTransition,
   },

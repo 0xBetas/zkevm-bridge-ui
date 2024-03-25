@@ -1,8 +1,12 @@
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
 import { ethers } from "ethers";
 
-import { ReactComponent as EthChainIcon } from "src/assets/icons/chains/ethereum.svg";
-import { ReactComponent as PolygonZkEVMChainIcon } from "src/assets/icons/chains/polygon-zkevm.svg";
+// import { ReactComponent as EthChainIcon } from "src/assets/icons/chains/ethereum.svg";
+// import { ReactComponent as PolygonZkEVMChainIcon } from "src/assets/icons/chains/polygon-zkevm.svg";
+
+import { ReactComponent as EthChainIcon } from "src/assets/icons/chains/blast.svg";
+import { ReactComponent as PolygonZkEVMChainIcon } from "src/assets/icons/chains/logo.svg";
+
 import { Chain, Currency, EthereumChain, ProviderError, Token, ZkEVMChain } from "src/domain";
 import { ProofOfEfficiency__factory } from "src/types/contracts/proof-of-efficiency";
 import { getEthereumNetworkName } from "src/utils/labels";
@@ -58,8 +62,10 @@ export const GAS_PRICE_INCREASE_PERCENTAGE = 50; // 50%
 
 export const DEPOSIT_CHECK_WORD = "I understand";
 
-export const ETH_TOKEN_LOGO_URI =
-  "https://raw.githubusercontent.com/Uniswap/interface/main/src/assets/images/ethereum-logo.png";
+// export const ETH_TOKEN_LOGO_URI =
+//   "https://raw.githubusercontent.com/Uniswap/interface/main/src/assets/images/ethereum-logo.png";
+
+export const ETH_TOKEN_LOGO_URI = "https://cryptologos.cc/logos/ethereum-eth-logo.svg";
 
 export const POLYGON_SUPPORT_URL = "https://support.polygon.technology";
 
@@ -102,6 +108,7 @@ export const getChains = ({
   );
 
   return Promise.all([
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     ethereumProvider.getNetwork().catch(() => Promise.reject(ProviderError.Ethereum)),
     polygonZkEVMProvider.getNetwork().catch(() => Promise.reject(ProviderError.PolygonZkEVM)),
     poeContract.networkName().catch(() => Promise.reject(ProviderError.Ethereum)),

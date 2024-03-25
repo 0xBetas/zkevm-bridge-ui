@@ -11,7 +11,8 @@ export const useHomeStyles = createUseStyles((theme: Theme) => ({
   ethereumAddress: {
     alignItems: "center",
     backgroundColor: theme.palette.grey.main,
-    borderRadius: 56,
+    // borderRadius: 56,
+    borderRadius: 0,
     display: "flex",
     margin: [theme.spacing(3), "auto", theme.spacing(3)],
     padding: [theme.spacing(1.25), theme.spacing(3)],

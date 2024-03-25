@@ -27,7 +27,9 @@ export const Header: FC<HeaderProps> = ({ backTo, Subtitle, title }) => {
           </Link>
         </div>
         <div className={`${classes.block} ${classes.centerBlock}`}>
-          <Typography type="h1">{title}</Typography>
+          <Typography className={classes.centerBlockTitle} type="h1">
+            {title}
+          </Typography>
         </div>
         <div className={`${classes.block} ${classes.rightBlock}`}>
           <NetworkSelector />

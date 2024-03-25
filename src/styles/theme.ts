@@ -6,6 +6,7 @@ export const theme = {
   maxWidth: 644,
   palette: {
     black: "#0a0b0d",
+    brand: "#FCFC05",
     error: {
       light: "rgba(232,67,12,0.1)",
       main: "#e8430d",
