@@ -3,7 +3,6 @@ import { FC, PropsWithChildren, createContext, useCallback, useContext, useMemo 
 
 import { getDeposit, getDeposits, getMerkleProof } from "src/adapters/bridge-api";
 import {
-  getErc20TokenEncodedMetadata,
   hasTxBeenReverted,
   isTxCanceled,
   isTxMined,
@@ -160,6 +159,7 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
         dest_addr,
         dest_net,
         global_index,
+        metadata,
         network_id,
         orig_addr,
         orig_net,
@@ -232,6 +232,7 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
             from,
             globalIndex: global_index,
             id,
+            metadata,
             status: "initiated",
             to,
             token,
@@ -249,6 +250,7 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
             from,
             globalIndex: global_index,
             id,
+            metadata,
             status: "on-hold",
             to,
             token,
@@ -267,6 +269,7 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
             from,
             globalIndex: global_index,
             id,
+            metadata,
             status: "completed",
             to,
             token,
@@ -310,11 +313,13 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
             dest_addr,
             dest_net,
             global_index,
+            metadata,
             network_id,
             orig_addr,
             orig_net,
             ready_for_claim,
             tx_hash,
+            
           } = apiDeposit;
 
           const from = env.chains.find((chain) => chain.networkId === network_id);
@@ -350,9 +355,11 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
                 fiatAmount: undefined,
                 from,
                 globalIndex: global_index,
+                metadata,
                 to,
                 token,
                 tokenOriginNetwork: orig_net,
+                
               },
             ])
           );
@@ -396,6 +403,7 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
           destinationAddress,
           from,
           globalIndex,
+          metadata,
           to,
           token,
           tokenOriginNetwork,
@@ -435,6 +443,7 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
               from,
               globalIndex,
               id,
+              metadata,
               status: "initiated",
               to,
               token,
@@ -452,6 +461,7 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
               from,
               globalIndex,
               id,
+              metadata,
               status: "on-hold",
               to,
               token,
@@ -470,6 +480,7 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
               from,
               globalIndex,
               id,
+              metadata,
               status: "completed",
               to,
               token,
@@ -838,10 +849,11 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
         destinationAddress,
         from,
         globalIndex,
+        metadata,
         to,
         token,
         tokenOriginNetwork,
-      },
+      }
     }: ClaimParams): Promise<ContractTransaction> => {
       if (!isAsyncTaskDataAvailable(connectedProvider)) {
         throw new Error("Connected provider is not available");
@@ -863,12 +875,6 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
           networkId,
         }
       );
-
-      const isTokenNativeOfToChain = token.chainId === to.chainId;
-      const isMetadataRequired = !isTokenEther(token) && !isTokenNativeOfToChain;
-      const metadata = isMetadataRequired
-        ? await getErc20TokenEncodedMetadata({ chain: from, token })
-        : "0x";
 
       const executeClaim = () =>
         contract

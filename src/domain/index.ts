@@ -21,6 +21,7 @@ export interface CommonChain {
 }
 
 export type EthereumChain = CommonChain & {
+  gasToken: string | null;
   key: "ethereum";
   poeContractAddress: string;
   rollupManagerAddress: string;
@@ -152,6 +153,7 @@ interface BridgeCommonFields {
   from: Chain;
   globalIndex: string;
   id: string;
+  metadata: string;
   to: Chain;
   token: Token;
   tokenOriginNetwork: number;
@@ -200,6 +202,7 @@ export interface Deposit {
   fiatAmount: BigNumber | undefined;
   from: Chain;
   globalIndex: string;
+  metadata: string;
   to: Chain;
   token: Token;
   tokenOriginNetwork: number;

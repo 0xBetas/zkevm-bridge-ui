@@ -1,10 +1,10 @@
-import { BigNumber } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { FC, useCallback, useEffect, useState } from "react";
 
 import { addCustomToken, getChainCustomTokens, removeCustomToken } from "src/adapters/storage";
 import { ReactComponent as ArrowDown } from "src/assets/icons/arrow-down.svg";
 import { ReactComponent as CaretDown } from "src/assets/icons/caret-down.svg";
-import { getEtherToken } from "src/constants";
+import { getEtherToken, getEthereumCustomNativeToken, getZkevmNativeToken } from "src/constants";
 import { useEnvContext } from "src/contexts/env.context";
 import { useProvidersContext } from "src/contexts/providers.context";
 import { useTokensContext } from "src/contexts/tokens.context";
@@ -48,7 +48,10 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
   const [balanceTo, setBalanceTo] = useState<AsyncTask<BigNumber, string>>({ status: "pending" });
   const [inputError, setInputError] = useState<string>();
   const [selectedChains, setSelectedChains] = useState<SelectedChains>();
-  const [token, setToken] = useState<Token>();
+  const [tokenFrom, setTokenFrom] = useState<Token>();
+  const [tokenTo, setTokenTo] = useState<Token>();
+  
+  
   const [amount, setAmount] = useState<BigNumber>();
   const [chains, setChains] = useState<Chain[]>();
   const [tokens, setTokens] = useState<Token[]>();
@@ -72,11 +75,11 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
   };
 
   const onTokenDropdownClick = () => {
-    setIsTokenListOpen(true);
+    // setIsTokenListOpen(true);
   };
 
   const onSelectToken = (token: Token) => {
-    setToken(token);
+    setTokenFrom(token);
     setIsTokenListOpen(false);
     setAmount(undefined);
   };
@@ -104,113 +107,167 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
             !(token.address === tokenToRemove.address && token.chainId === tokenToRemove.chainId)
         )
       );
-      if (selectedChains && tokenToRemove.address === token?.address) {
-        setToken(getEtherToken(selectedChains.from));
+      if (selectedChains && tokenToRemove.address === tokenFrom?.address) {
+        setTokenFrom(getEtherToken(selectedChains.from));
       }
     }
   };
 
   const onFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedChains && token && amount) {
+    if (selectedChains && tokenFrom && amount) {
       onSubmit({
         amount: amount,
         from: selectedChains.from,
         to: selectedChains.to,
-        token: token,
+        token: tokenFrom,
       });
     }
   };
 
   const getTokenBalance = useCallback(
     (token: Token, chain: Chain): Promise<BigNumber> => {
+
       if (isTokenEther(token)) {
         return chain.provider.getBalance(account);
       } else {
-        return getErc20TokenBalance({
+
+        const balance = getErc20TokenBalance({
           accountAddress: account,
           chain: chain,
-          tokenAddress: selectTokenAddress(token, chain),
+          tokenAddress: token.address,
         });
+        return balance;
       }
     },
+
     [account, getErc20TokenBalance]
   );
 
   useEffect(() => {
     // Load all the tokens for the selected chain without their balance
-    if (selectedChains && defaultTokens) {
+    if (env && selectedChains && defaultTokens) {
       const { from } = selectedChains;
-      const chainTokens = [...getChainCustomTokens(from), ...defaultTokens];
+      // const chainTokens = [...getChainCustomTokens(from), ...defaultTokens];
+      if(selectedChains.from.key =="ethereum"){
+        setTokenFrom(
+          getEthereumCustomNativeToken(env.chains[0])
+        );
+        setTokens(
+          [getEthereumCustomNativeToken(env.chains[0])]
+        );
 
-      setTokens(
-        chainTokens.map((token) => ({
-          ...token,
-          balance: {
-            status: "pending",
-          },
-        }))
-      );
+        return;
+      }
+      if(selectedChains.from.key =="polygon-zkevm"){
+        setTokenFrom(
+          getZkevmNativeToken(env.chains[1])
+        );
+
+        setTokens(
+          [getZkevmNativeToken(env.chains[1])]
+        );
+        
+        return;
+      }
+
+
+      // setTokens(
+      //   chainTokens.map((token) => ({
+      //     ...token,
+      //     balance: {
+      //       status: "pending",
+      //     },
+      //   }))
+      // );
     }
-  }, [defaultTokens, selectedChains]);
+  }, [defaultTokens, selectedChains, env]);
+
+  // useEffect(() => {
+  //   // Load the balances of all the tokens of the primary chain (from)
+  //   const areTokensPending = tokens?.some((tkn) => tkn.balance?.status === "pending");
+
+  //   if (selectedChains && tokens && areTokensPending) {
+  //     const getUpdatedTokens = (tokens: Token[] | undefined, updatedToken: Token) =>
+  //       tokens
+  //         ? tokens.map((tkn) =>
+  //             tkn.address === updatedToken.address && tkn.chainId === updatedToken.chainId
+  //               ? updatedToken
+  //               : tkn
+  //           )
+  //         : undefined;
+
+  //     setTokens(() =>
+  //       tokens.map((token: Token) => {
+  //         getTokenBalance(token, selectedChains.from)
+  //           .then((balance): void => {
+  //             callIfMounted(() => {
+  //               const updatedToken: Token = {
+  //                 ...token,
+  //                 balance: {
+  //                   data: balance,
+  //                   status: "successful",
+  //                 },
+  //               };
+
+  //               setTokens((currentTokens) => getUpdatedTokens(currentTokens, updatedToken));
+  //             });
+  //           })
+  //           .catch(() => {
+  //             callIfMounted(() => {
+  //               const updatedToken: Token = {
+  //                 ...token,
+  //                 balance: {
+  //                   error: "Couldn't retrieve token balance",
+  //                   status: "failed",
+  //                 },
+  //               };
+
+  //               setTokens((currentTokens) => getUpdatedTokens(currentTokens, updatedToken));
+  //             });
+  //           });
+
+  //         return { ...token, balance: { status: "loading" } };
+  //       })
+  //     );
+  //   }
+  // }, [callIfMounted, defaultTokens, getTokenBalance, selectedChains, tokens]);
 
   useEffect(() => {
-    // Load the balances of all the tokens of the primary chain (from)
-    const areTokensPending = tokens?.some((tkn) => tkn.balance?.status === "pending");
-
-    if (selectedChains && tokens && areTokensPending) {
-      const getUpdatedTokens = (tokens: Token[] | undefined, updatedToken: Token) =>
-        tokens
-          ? tokens.map((tkn) =>
-              tkn.address === updatedToken.address && tkn.chainId === updatedToken.chainId
-                ? updatedToken
-                : tkn
-            )
-          : undefined;
-
-      setTokens(() =>
-        tokens.map((token: Token) => {
-          getTokenBalance(token, selectedChains.from)
-            .then((balance): void => {
-              callIfMounted(() => {
-                const updatedToken: Token = {
-                  ...token,
-                  balance: {
-                    data: balance,
-                    status: "successful",
-                  },
-                };
-
-                setTokens((currentTokens) => getUpdatedTokens(currentTokens, updatedToken));
-              });
-            })
-            .catch(() => {
-              callIfMounted(() => {
-                const updatedToken: Token = {
-                  ...token,
-                  balance: {
-                    error: "Couldn't retrieve token balance",
-                    status: "failed",
-                  },
-                };
-
-                setTokens((currentTokens) => getUpdatedTokens(currentTokens, updatedToken));
-              });
-            });
-
-          return { ...token, balance: { status: "loading" } };
-        })
-      );
+    if(env){
+      if(tokenFrom?.chainId == env.chains[0].chainId){
+        setTokenTo(getZkevmNativeToken(env.chains[1]));
+      }else{
+        setTokenTo(getEthereumCustomNativeToken(env.chains[0]));
+      }  
     }
-  }, [callIfMounted, defaultTokens, getTokenBalance, selectedChains, tokens]);
+  }, [tokenFrom, env])
 
   useEffect(() => {
     // Load the balance of the selected token in both networks
-    if (selectedChains && token) {
+    if (env && selectedChains) {
       setBalanceFrom({ status: "loading" });
       setBalanceTo({ status: "loading" });
+      let fromToken;
+      let toToken;
+      if(selectedChains.from.key == "ethereum"){
+        fromToken = getEthereumCustomNativeToken(env.chains[0])
+        toToken = getZkevmNativeToken(env.chains[1]);
+      } else {
+        console.log("-----------------2");
+        fromToken = getZkevmNativeToken(env.chains[1]);
+        toToken = getEthereumCustomNativeToken(env.chains[0])
+        // console.log(fromToken, toToken);
+      }
 
-      getTokenBalance(token, selectedChains.from)
+
+      // if(env && selectedChains.from.key == "polygon-zkevm" && token){
+      //   fromToken = getEthereumCustomNativeToken(env.chains[0])
+      //   toToken = getEtherToken(env.chains[1]);
+      // }
+      
+
+      getTokenBalance(fromToken, selectedChains.from)
         .then((balance) =>
           callIfMounted(() => {
             setBalanceFrom({ data: balance, status: "successful" });
@@ -221,9 +278,14 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
             setBalanceFrom({ error: "Couldn't retrieve token balance", status: "failed" });
           });
         });
-      getTokenBalance(token, selectedChains.to)
+
+      // console.log("toToken---",toToken, selectedChains.to);
+
+      getTokenBalance(toToken, selectedChains.to)
         .then((balance) =>
           callIfMounted(() => {
+            console.log("------------getErc20TokenBalance", balance);
+
             setBalanceTo({ data: balance, status: "successful" });
           })
         )
@@ -232,8 +294,9 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
             setBalanceTo({ error: "Couldn't retrieve token balance", status: "failed" });
           });
         });
+
     }
-  }, [callIfMounted, getTokenBalance, selectedChains, token]);
+  }, [callIfMounted, getTokenBalance, selectedChains, env]);
 
   useEffect(() => {
     // Load the default values after the network is changed
@@ -243,7 +306,11 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
 
       if (from && to) {
         setSelectedChains({ from, to });
-        setToken(getEtherToken(from));
+        if(from.key == "ethereum"){
+          setTokenFrom(getEthereumCustomNativeToken(from));
+        }else{
+          setTokenFrom(getZkevmNativeToken(from));
+        }
       }
       setAmount(undefined);
     }
@@ -255,13 +322,13 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
     // Load default form values
     if (formData) {
       setSelectedChains({ from: formData.from, to: formData.to });
-      setToken(formData.token);
+      setTokenFrom(formData.token);
       setAmount(formData.amount);
       onResetForm();
     }
   }, [formData, onResetForm]);
 
-  if (!env || !selectedChains || !tokens || !token) {
+  if (!env || !selectedChains || !tokens || !tokenFrom) {
     return (
       <div className={classes.spinner}>
         <Spinner />
@@ -289,15 +356,15 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
             <Typography type="body2">Balance</Typography>
             <TokenBalance
               spinnerSize={14}
-              token={{ ...token, balance: balanceFrom }}
+              token={{ ...tokenFrom, balance: balanceFrom }}
               typographyProps={{ type: "body1" }}
             />
           </div>
         </div>
         <div className={`${classes.row} ${classes.middleRow}`}>
           <button className={classes.tokenSelector} onClick={onTokenDropdownClick} type="button">
-            <Icon isRounded size={24} url={token.logoURI} />
-            <Typography type="h2">{token.symbol}</Typography>
+            <Icon isRounded size={24} url={tokenFrom.logoURI} />
+            <Typography type="h2">{tokenFrom.symbol}</Typography>
             <CaretDown />
           </button>
           <AmountInput
@@ -307,7 +374,7 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
                 : BigNumber.from(0)
             }
             onChange={onAmountInputChange}
-            token={token}
+            token={tokenFrom}
             value={amount}
           />
         </div>
@@ -326,11 +393,11 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
           </div>
           <div className={classes.rightBox}>
             <Typography type="body2">Balance</Typography>
-            <TokenBalance
+            {tokenTo? (<TokenBalance
               spinnerSize={14}
-              token={{ ...token, balance: balanceTo }}
+              token={{ ...tokenTo, balance: balanceTo }}
               typographyProps={{ type: "body1" }}
-            />
+            />): null}
           </div>
         </div>
       </Card>

@@ -61,6 +61,8 @@ export const DEPOSIT_CHECK_WORD = "I understand";
 export const ETH_TOKEN_LOGO_URI =
   "https://raw.githubusercontent.com/Uniswap/interface/main/packages/ui/src/assets/logos/png/ethereum-logo.png";
 
+export const WBTC_TOKEN_LOGO_URI = "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png"
+
 export const POLYGON_SUPPORT_URL = "https://support.polygon.technology";
 
 export const POLYGON_TERMS_AND_CONDITIONS_URL = "https://polygon.technology/terms-of-use";
@@ -84,6 +86,7 @@ export const getChains = ({
   ethereum: {
     bridgeContractAddress: string;
     explorerUrl: string;
+    gasToken: string | null;
     poeContractAddress: string;
     rollupManagerAddress: string;
     rpcUrl: string;
@@ -111,6 +114,7 @@ export const getChains = ({
       bridgeContractAddress: ethereum.bridgeContractAddress,
       chainId: ethereumNetwork.chainId,
       explorerUrl: ethereum.explorerUrl,
+      gasToken: ethereum.gasToken,
       Icon: EthChainIcon,
       key: "ethereum",
       name: getEthereumNetworkName(ethereumNetwork.chainId),
@@ -133,8 +137,8 @@ export const getChains = ({
       name: polygonZkEVMNetworkName,
       nativeCurrency: {
         decimals: 18,
-        name: "Ether",
-        symbol: "ETH",
+        name: "Wrapped Bitcoin",
+        symbol: "WBTC",
       },
       networkId: polygonZkEVM.networkId,
       provider: polygonZkEVMProvider,
@@ -142,7 +146,39 @@ export const getChains = ({
   ]);
 };
 
+export const getEthereumCustomNativeToken = (chain: EthereumChain) : Token => {
+  return {
+    address: chain.gasToken? chain.gasToken :ethers.constants.AddressZero,
+    chainId: chain.chainId,
+    decimals: 8,
+    logoURI: WBTC_TOKEN_LOGO_URI,
+    name: "Wrapped Bitcoin",
+    symbol: "WBTC",
+  };
+}
+
+
+export const getZkevmNativeToken = (chain: ZkEVMChain): Token => {
+  return {
+    address: ethers.constants.AddressZero,
+    chainId: chain.chainId,
+    decimals: 18,
+    logoURI: WBTC_TOKEN_LOGO_URI,
+    name: "Wrapped Bitcoin",
+    symbol: "WBTC",
+  };
+};
+
+
 export const getEtherToken = (chain: Chain): Token => {
+  // console.log("chain.key---------", chain);
+  
+  // if(chain.key === "ethereum"){
+  //   return getEthereumCustomNativeToken(chain);
+  // }
+  if(chain.key === "polygon-zkevm"){
+    return getZkevmNativeToken(chain);
+  }
   return {
     address: ethers.constants.AddressZero,
     chainId: chain.chainId,

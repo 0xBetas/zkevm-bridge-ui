@@ -13,6 +13,7 @@ interface DepositInput {
   dest_addr: string;
   dest_net: number;
   global_index: string;
+  metadata: string;
   network_id: number;
   orig_addr: string;
   orig_net: number;
@@ -28,11 +29,13 @@ interface DepositOutput {
   dest_addr: string;
   dest_net: number;
   global_index: string;
+  metadata: string;
   network_id: number;
   orig_addr: string;
   orig_net: number;
   ready_for_claim: boolean;
   tx_hash: string;
+
 }
 
 interface MerkleProof {
@@ -56,6 +59,7 @@ const depositParser = StrictSchema<DepositInput, DepositOutput>()(
     dest_addr: z.string(),
     dest_net: z.number(),
     global_index: z.string(),
+    metadata: z.string(),
     network_id: z.number(),
     orig_addr: z.string(),
     orig_net: z.number(),
