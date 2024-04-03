@@ -83,9 +83,14 @@ export const BridgeCard: FC<BridgeCardProps> = ({
   const preferredCurrencySymbol = getCurrencySymbol(getCurrency());
   let newAmount = amount;
   if(to.key === "ethereum"){
-    newAmount = amount.div(10000000000);
+    newAmount = bridge.amount.div(10000000000);
   }
+
   const tokenAmountString = `${formatTokenAmount(newAmount, token)} ${token.symbol}`;
+  // console.log(tokenAmountString, to);
+  // if(tokenAmountString.startsWith("0")){
+  //   console.log("------------------------", bridge, newAmount.toString());
+  // }
 
   const fiatAmountString = showFiatAmount
     ? `${preferredCurrencySymbol}${fiatAmount ? formatFiatAmount(fiatAmount) : "--"}`

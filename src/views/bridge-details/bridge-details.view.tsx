@@ -282,18 +282,25 @@ export const BridgeDetails: FC = () => {
         return null;
       }
 
-      const tokenAmountString = `${formatTokenAmount(amount, token)} ${token.symbol}`;
+      let newAmount = amount;
+      if(to.key === "ethereum"){
+        newAmount = amount.div(10000000000);
+      }
+      // console.log(from);
+      // console.log(to);
+      
+      const tokenAmountString = `${formatTokenAmount(newAmount, token)} ${token.symbol}`;
 
       const fiatAmountString = env.fiatExchangeRates.areEnabled
         ? `${currencySymbol}${fiatAmount ? formatFiatAmount(fiatAmount) : "--"}`
         : undefined;
 
-      const step1FeeString = `${step1EthFee ? formatTokenAmount(step1EthFee, ethToken) : "--"} ETH`;
+      const step1FeeString = `${step1EthFee ? formatTokenAmount(step1EthFee, ethToken) : "--"} ${from.nativeCurrency.symbol}`;
       const step1FiatFeeString = env.fiatExchangeRates.areEnabled
         ? `${currencySymbol}${step1FiatFee ? formatFiatAmount(step1FiatFee) : "--"}`
         : undefined;
 
-      const step2FeeString = `${step2EthFee ? formatTokenAmount(step2EthFee, ethToken) : "--"} ETH`;
+      const step2FeeString = `${step2EthFee ? formatTokenAmount(step2EthFee, ethToken) : "--"} ${to.nativeCurrency.symbol}`;
       const step2FiatFeeString = env.fiatExchangeRates.areEnabled
         ? `${currencySymbol}${step2FiatFee ? formatFiatAmount(step2FiatFee) : "--"}`
         : undefined;
