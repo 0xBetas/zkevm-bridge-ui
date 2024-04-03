@@ -14,7 +14,7 @@ import { isAsyncTaskDataAvailable } from "src/utils/types";
 import { useBridgeCardStyles } from "src/views/activity/components/bridge-card/bridge-card.styles";
 import { Card } from "src/views/shared/card/card.view";
 import { ErrorMessage } from "src/views/shared/error-message/error-message.view";
-import { Icon } from "src/views/shared/icon/icon.view";
+// import { Icon } from "src/views/shared/icon/icon.view";
 import { Typography } from "src/views/shared/typography/typography.view";
 
 export interface BridgeCardProps {
