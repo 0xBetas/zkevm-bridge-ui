@@ -45,7 +45,7 @@ export const BridgeCard: FC<BridgeCardProps> = ({
 
   const [blockNumber, fromKey] =
     bridge.status !== "pending" ? [bridge.blockNumber, bridge.from.key] : [undefined, undefined];
-
+    
   useEffect(() => {
     if (status === "initiated" && fromKey === "polygon-zkevm") {
       setBatchNumberOfL2Block((currentBatchNumberOfL2Block) =>
@@ -81,8 +81,11 @@ export const BridgeCard: FC<BridgeCardProps> = ({
   };
 
   const preferredCurrencySymbol = getCurrencySymbol(getCurrency());
-
-  const tokenAmountString = `${formatTokenAmount(amount, token)} ${token.symbol}`;
+  let newAmount = amount;
+  if(to.key === "ethereum"){
+    newAmount = amount.div(10000000000);
+  }
+  const tokenAmountString = `${formatTokenAmount(newAmount, token)} ${token.symbol}`;
 
   const fiatAmountString = showFiatAmount
     ? `${preferredCurrencySymbol}${fiatAmount ? formatFiatAmount(fiatAmount) : "--"}`
@@ -113,6 +116,7 @@ export const BridgeCard: FC<BridgeCardProps> = ({
 
   const BridgeIcon = to.key === "ethereum" ? <BridgeL1Icon /> : <BridgeL2Icon />;
 
+  // if()
   const BridgeLabel = (
     <Typography className={classes.label} type="body1">
       {to.key === "ethereum" ? "Bridge to L1" : "Bridge to L2"}

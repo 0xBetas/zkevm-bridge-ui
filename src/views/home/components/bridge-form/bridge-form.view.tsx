@@ -1,7 +1,7 @@
-import { BigNumber, ethers } from "ethers";
+import { BigNumber } from "ethers";
 import { FC, useCallback, useEffect, useState } from "react";
 
-import { addCustomToken, getChainCustomTokens, removeCustomToken } from "src/adapters/storage";
+import { addCustomToken, removeCustomToken } from "src/adapters/storage";
 import { ReactComponent as ArrowDown } from "src/assets/icons/arrow-down.svg";
 import { ReactComponent as CaretDown } from "src/assets/icons/caret-down.svg";
 import { getEtherToken, getEthereumCustomNativeToken, getZkevmNativeToken } from "src/constants";
@@ -10,7 +10,7 @@ import { useProvidersContext } from "src/contexts/providers.context";
 import { useTokensContext } from "src/contexts/tokens.context";
 import { AsyncTask, Chain, FormData, Token } from "src/domain";
 import { useCallIfMounted } from "src/hooks/use-call-if-mounted";
-import { isTokenEther, selectTokenAddress } from "src/utils/tokens";
+import { isTokenEther } from "src/utils/tokens";
 import { isAsyncTaskDataAvailable } from "src/utils/types";
 import { AmountInput } from "src/views/home/components/amount-input/amount-input.view";
 import { useBridgeFormStyles } from "src/views/home/components/bridge-form/bridge-form.styles";
@@ -147,7 +147,7 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
   useEffect(() => {
     // Load all the tokens for the selected chain without their balance
     if (env && selectedChains && defaultTokens) {
-      const { from } = selectedChains;
+      // const { from } = selectedChains;
       // const chainTokens = [...getChainCustomTokens(from), ...defaultTokens];
       if(selectedChains.from.key =="ethereum"){
         setTokenFrom(
@@ -254,7 +254,7 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
         fromToken = getEthereumCustomNativeToken(env.chains[0])
         toToken = getZkevmNativeToken(env.chains[1]);
       } else {
-        console.log("-----------------2");
+        // console.log("-----------------2");
         fromToken = getZkevmNativeToken(env.chains[1]);
         toToken = getEthereumCustomNativeToken(env.chains[0])
         // console.log(fromToken, toToken);
@@ -284,7 +284,7 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
       getTokenBalance(toToken, selectedChains.to)
         .then((balance) =>
           callIfMounted(() => {
-            console.log("------------getErc20TokenBalance", balance);
+            // console.log("------------getErc20TokenBalance", balance);
 
             setBalanceTo({ data: balance, status: "successful" });
           })

@@ -5,7 +5,7 @@ import { FIAT_DISPLAY_PRECISION, TOKEN_DISPLAY_PRECISION } from "src/constants";
 import { Token } from "src/domain";
 
 export const formatTokenAmount = (value: BigNumber, token: Token): string => {
-  console.log("token -----------", value, token)
+  // console.log("token -----------", value, token)
   const amount = ethers.utils.formatUnits(value, token.decimals);
   const [whole, decimals = ""] = amount.split(".");
   const trimmed =
