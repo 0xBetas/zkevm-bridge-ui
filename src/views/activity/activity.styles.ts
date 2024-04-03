@@ -60,7 +60,8 @@ export const useActivityStyles = createUseStyles((theme: Theme) => ({
     backgroundColor: theme.palette.grey.light,
   },
   stickyContent: {
-    background: theme.palette.grey.light,
+    // background: theme.palette.grey.light,
+    background: "transparent",
     position: "sticky",
     top: 0,
     zIndex: 1,

@@ -31,6 +31,7 @@ export const useHeaderStyles = createUseStyles((theme: Theme) => ({
       backgroundColor: theme.palette.grey.main,
     },
     alignItems: "center",
+    background: theme.palette.grey.light,
     borderRadius: 8,
     display: "flex",
     gap: theme.spacing(1),

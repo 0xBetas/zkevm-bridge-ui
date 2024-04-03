@@ -50,8 +50,7 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
   const [selectedChains, setSelectedChains] = useState<SelectedChains>();
   const [tokenFrom, setTokenFrom] = useState<Token>();
   const [tokenTo, setTokenTo] = useState<Token>();
-  
-  
+
   const [amount, setAmount] = useState<BigNumber>();
   const [chains, setChains] = useState<Chain[]>();
   const [tokens, setTokens] = useState<Token[]>();
@@ -127,11 +126,9 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
 
   const getTokenBalance = useCallback(
     (token: Token, chain: Chain): Promise<BigNumber> => {
-
       if (isTokenEther(token)) {
         return chain.provider.getBalance(account);
       } else {
-
         const balance = getErc20TokenBalance({
           accountAddress: account,
           chain: chain,
@@ -149,28 +146,19 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
     if (env && selectedChains && defaultTokens) {
       // const { from } = selectedChains;
       // const chainTokens = [...getChainCustomTokens(from), ...defaultTokens];
-      if(selectedChains.from.key =="ethereum"){
-        setTokenFrom(
-          getEthereumCustomNativeToken(env.chains[0])
-        );
-        setTokens(
-          [getEthereumCustomNativeToken(env.chains[0])]
-        );
+      if (selectedChains.from.key == "ethereum") {
+        setTokenFrom(getEthereumCustomNativeToken(env.chains[0]));
+        setTokens([getEthereumCustomNativeToken(env.chains[0])]);
 
         return;
       }
-      if(selectedChains.from.key =="polygon-zkevm"){
-        setTokenFrom(
-          getZkevmNativeToken(env.chains[1])
-        );
+      if (selectedChains.from.key == "polygon-zkevm") {
+        setTokenFrom(getZkevmNativeToken(env.chains[1]));
 
-        setTokens(
-          [getZkevmNativeToken(env.chains[1])]
-        );
-        
+        setTokens([getZkevmNativeToken(env.chains[1])]);
+
         return;
       }
-
 
       // setTokens(
       //   chainTokens.map((token) => ({
@@ -234,14 +222,14 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
   // }, [callIfMounted, defaultTokens, getTokenBalance, selectedChains, tokens]);
 
   useEffect(() => {
-    if(env){
-      if(tokenFrom?.chainId == env.chains[0].chainId){
+    if (env) {
+      if (tokenFrom?.chainId == env.chains[0].chainId) {
         setTokenTo(getZkevmNativeToken(env.chains[1]));
-      }else{
+      } else {
         setTokenTo(getEthereumCustomNativeToken(env.chains[0]));
-      }  
+      }
     }
-  }, [tokenFrom, env])
+  }, [tokenFrom, env]);
 
   useEffect(() => {
     // Load the balance of the selected token in both networks
@@ -250,22 +238,20 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
       setBalanceTo({ status: "loading" });
       let fromToken;
       let toToken;
-      if(selectedChains.from.key == "ethereum"){
-        fromToken = getEthereumCustomNativeToken(env.chains[0])
+      if (selectedChains.from.key == "ethereum") {
+        fromToken = getEthereumCustomNativeToken(env.chains[0]);
         toToken = getZkevmNativeToken(env.chains[1]);
       } else {
         // console.log("-----------------2");
         fromToken = getZkevmNativeToken(env.chains[1]);
-        toToken = getEthereumCustomNativeToken(env.chains[0])
+        toToken = getEthereumCustomNativeToken(env.chains[0]);
         // console.log(fromToken, toToken);
       }
-
 
       // if(env && selectedChains.from.key == "polygon-zkevm" && token){
       //   fromToken = getEthereumCustomNativeToken(env.chains[0])
       //   toToken = getEtherToken(env.chains[1]);
       // }
-      
 
       getTokenBalance(fromToken, selectedChains.from)
         .then((balance) =>
@@ -294,7 +280,6 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
             setBalanceTo({ error: "Couldn't retrieve token balance", status: "failed" });
           });
         });
-
     }
   }, [callIfMounted, getTokenBalance, selectedChains, env]);
 
@@ -306,9 +291,9 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
 
       if (from && to) {
         setSelectedChains({ from, to });
-        if(from.key == "ethereum"){
+        if (from.key == "ethereum") {
           setTokenFrom(getEthereumCustomNativeToken(from));
-        }else{
+        } else {
           setTokenFrom(getZkevmNativeToken(from));
         }
       }
@@ -393,11 +378,13 @@ export const BridgeForm: FC<BridgeFormProps> = ({ account, formData, onResetForm
           </div>
           <div className={classes.rightBox}>
             <Typography type="body2">Balance</Typography>
-            {tokenTo? (<TokenBalance
-              spinnerSize={14}
-              token={{ ...tokenTo, balance: balanceTo }}
-              typographyProps={{ type: "body1" }}
-            />): null}
+            {tokenTo ? (
+              <TokenBalance
+                spinnerSize={14}
+                token={{ ...tokenTo, balance: balanceTo }}
+                typographyProps={{ type: "body1" }}
+              />
+            ) : null}
           </div>
         </div>
       </Card>

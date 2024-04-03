@@ -65,6 +65,9 @@ export const useAppStyles = createUseStyles((theme: Theme) => ({
       textDecoration: "none",
     },
     body: {
+      // background: "#000",
+      background:
+        "linear-gradient(90deg, rgba(163,34,9,1) 0%, rgba(217,155,100,1) 51%, rgba(71,12,3,1) 100%)",
       color: theme.palette.black,
       display: "flex",
       flexDirection: "column",
